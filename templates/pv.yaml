@@ -1,0 +1,20 @@
+{{- if .Values.persistence.enabled -}}
+{{- $fullName := include "vaultwarden.fullname" . -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: {{ $fullName }}
+spec:
+  {{- with .Values.persistence.volume }}
+  capacity:
+    storage: {{ .capacity }}
+  hostPath: 
+    path: {{ .path }}
+    type: DirectoryOrCreate
+  volumeMode: {{ .mode | default "Filesystem" | quote }}
+  persistentVolumeReclaimPolicy: {{ .reclaimPolicy | default "Retain" | quote }}
+  accessModes: 
+    - {{ .accessMode | quote }}
+  storageClassName: {{ .className | quote }}
+  {{ end }}
+{{ end }}
