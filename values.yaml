@@ -64,18 +64,15 @@ ingress:
 
 persistence:
   enabled: true
+  capacity: 3Gi
+  accessMode: ReadWriteOnce
+  className: default
   claim:
-    capacity: 3Gi
-    className: default
-    accessMode: ReadWriteOnce
     volumes:
       - name: vault-volume
         path: /data
         claimName: vaultwarden-app
   volume:
-    capacity: 3Gi
-    accessMode: ReadWriteOnce
-    className: default
     path: /srv/vaultwarden
 
 resources: {}

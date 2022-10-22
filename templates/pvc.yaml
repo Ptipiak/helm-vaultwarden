@@ -5,14 +5,11 @@ kind: PersistentVolumeClaim
 metadata:
     name: {{ $fullName }}
 spec:
-  {{ with .Values.persistence }}
-  storageClassName: {{ .claim.className | quote }}
-  {{- if .claim.accessMode }}
+  {{- with .Values.persistence }}
+  capacity:
+    storage: {{ .capacity | quote }}
   accessModes:
-    - {{ .claim.accessMode | quote }}
-  resources:
-   requests:
-     storage: {{ .claim.capacity | quote }}
-  {{- end -}}
+    - {{ .accessMode | quote }}
+  storageClassName: {{ .className | quote }}
   {{- end -}}
 {{- end -}}
